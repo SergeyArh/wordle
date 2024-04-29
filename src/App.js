@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 import { Wordle } from './Wordle';
 import { colorsOfKeybord } from "./domain/colorsOfKeybord";
 import wordsList  from './wordleWordList.json';
+import targetWords from './targetWords.json';
 import { ModalWindow } from './ModalWindow';
 import { NewGame } from './NewGame';
 import { Win } from './Win';
@@ -23,7 +24,8 @@ function App() {
   const isLose = values.words.length === 6 && !isWin;
 
   function createTargetWord() {
-    const arr = wordsList.map(word => word.replace(/'/g, ''));
+    const arr = targetWords.words;
+    //const arr = wordsList.map(word => word.replace(/'/g, ''));
     const index = Math.floor(Math.random() * arr.length);
     return arr[index]
   }
@@ -90,7 +92,6 @@ function App() {
     })
   }
   
-  
   return (
     <div className='wrapper'>
       {
@@ -124,12 +125,3 @@ function App() {
 } 
 
 export default App;
-
-// reducers
-// таблица пользователей и форма добавления + useDispatch, useSelector, connect
-// добавляем redux в покемонов
-// thunk для загрузки покемонов + middleware на переключение страницы
-// своя реализация redux (getState, dispatch, subscribe)
-// своя реализация redux: middleware
-// своя реализация react-redux: connect, useSelector, useDispatch
-// redux-toolkit
