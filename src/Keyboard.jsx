@@ -14,16 +14,21 @@ export function Keyboard({
   onLetterPress,
   onBackspacePress,
   onEnterPress,
-  colors
+  colors,
+  language
 }) {
-  const rows = [
+
+  const layout = language ? [
     ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
     ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
     ['z', 'x', 'c', 'v', 'b', 'n', 'm']
-  ];
+  ] : [
+    ['ё', 'й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'щ', 'з', 'х', 'ъ'],
+    ['ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'ж', 'э'],
+    ['я', 'ч', 'с', 'м', 'и', 'т', 'ь', 'б', 'ю']
+  ]
 
   useEffect(() => {
-    console.log("useEffect")
     function buttonClick(e) {
       e.preventDefault();
       if (e.key === 'Enter') {
@@ -33,19 +38,19 @@ export function Keyboard({
         return onBackspacePress()
       }
       const key = e.key.toLowerCase();
-      if (rows.flat().includes(key)) {
+      if (layout.flat().includes(key)) {
         return onLetterPress(key)
       }
     }
     window.addEventListener('keydown', buttonClick);
     return () => window.removeEventListener('keydown', buttonClick);
-  }, []);
+  }, [language]);
 
   return (
     <div className="keyboard">
       <div className="row">
         <KeyboardRow 
-          letters={rows[0]}
+          letters={layout[0]}
           colors={colors}
           key={'1'}
           onLetterPress={onLetterPress}
@@ -54,7 +59,7 @@ export function Keyboard({
       <div className="row">
         <div className="less"></div>
         <KeyboardRow
-          letters={rows[1]}
+          letters={layout[1]}
           colors={colors}
           key={'2'} 
           onLetterPress={onLetterPress}
@@ -64,7 +69,7 @@ export function Keyboard({
       <div className="row">
         <button className="button more" data-state="empty" onClick={() => onEnterPress()}>↵</button>
         <KeyboardRow
-          letters={rows[2]}
+          letters={layout[2]}
           colors={colors} 
           key={'3'} 
           onLetterPress={onLetterPress}

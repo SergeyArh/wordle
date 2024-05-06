@@ -1,8 +1,8 @@
 import { getColorOfWord } from "./getColorOfWord";
 
 
-export function colorsOfKeybord(words, target) {
-  const colors = {
+export function colorsOfKeybord(words, target, isEnglish) {
+  const colors = isEnglish ? {
     'q': 'empty',
     'w': 'empty',
     'e': 'empty',
@@ -29,6 +29,40 @@ export function colorsOfKeybord(words, target) {
     'b': 'empty',
     'n': 'empty',
     'm': 'empty',
+  } : {
+    'ё': 'empty',
+    'й': 'empty',
+    'ц': 'empty',
+    'у': 'empty',
+    'к': 'empty',
+    'е': 'empty',
+    'н': 'empty',
+    'г': 'empty',
+    'ш': 'empty',
+    'щ': 'empty',
+    'з': 'empty',
+    'х': 'empty',
+    'ъ': 'empty',
+    'ф': 'empty',
+    'ы': 'empty',
+    'в': 'empty',
+    'а': 'empty',
+    'п': 'empty',
+    'р': 'empty',
+    'о': 'empty',
+    'л': 'empty',
+    'д': 'empty',
+    'ж': 'empty',
+    'э': 'empty',
+    'я': 'empty',
+    'ч': 'empty',
+    'с': 'empty',
+    'м': 'empty',
+    'и': 'empty',
+    'т': 'empty',
+    'ь': 'empty',
+    'б': 'empty',
+    'ю': 'empty'
   }
 
   for (let word of words) {

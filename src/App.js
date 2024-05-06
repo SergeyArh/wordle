@@ -5,6 +5,7 @@ import { Wordle } from './Wordle';
 import { colorsOfKeybord } from "./domain/colorsOfKeybord";
 import wordsList  from './wordleWordList.json';
 import targetWords from './targetWords.json';
+import russianWords from './russianWords.json';
 import { ModalWindow } from './ModalWindow';
 import { NewGame } from './NewGame';
 import { Win } from './Win';
@@ -12,26 +13,27 @@ import { Lose } from './Lose';
 
 function App() {
 
+  const [isEnglish, setIsEnglish] = useState(true);
   const [values, setValues] = useState({
     words: [],
     current: [],
     target: createTargetWord()
   })
+  
   const [isOpenModalWindow, setIsOpenModalWindow] = useState(false);
-  const colors = useMemo(() => colorsOfKeybord(values.words, values.target), [values]);
+  const colors = useMemo(() => colorsOfKeybord(values.words, values.target, isEnglish), [values]);
   
   const isWin = values.words.at(-1) === values.target;
   const isLose = values.words.length === 6 && !isWin;
 
   function createTargetWord() {
-    const arr = targetWords.words;
-    //const arr = wordsList.map(word => word.replace(/'/g, ''));
+    const arr = isEnglish ? targetWords.words : russianWords.words
     const index = Math.floor(Math.random() * arr.length);
-    return arr[index]
+    return arr[index].toLowerCase()
   }
 
   function isValidWord(word) {
-    const arr = wordsList.map(word => word.replace(/'/g, ''));
+    const arr = isEnglish ? wordsList.map(word => word.replace(/'/g, '')) : russianWords.words.map(word => word.toLowerCase())
     return arr.includes(word)
   }
 
@@ -91,6 +93,20 @@ function App() {
       return values
     })
   }
+
+  function toggleLanguage() {
+    setIsEnglish(lan => {
+      const res = !lan;
+      const arr = res ? targetWords.words : russianWords.words
+      const index = Math.floor(Math.random() * arr.length);
+      setValues({
+        words: [],
+        current: [],
+        target: arr[index].toLowerCase()
+    })
+      return res
+    })
+  }
   
   return (
     <div className='wrapper'>
@@ -119,7 +135,9 @@ function App() {
         onBackspacePress={onBackspacePress}
         onEnterPress={onEnterPress}
         colors={colors}
+        language={isEnglish}
       />
+      <button className='button-lang' onClick={toggleLanguage}>{isEnglish ? 'Русский' : 'English'}</button>
     </div>
   ); 
 } 
