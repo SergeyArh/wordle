@@ -110,6 +110,7 @@ function App() {
   
   return (
     <div className='wrapper'>
+      <button className='button-lang' onClick={toggleLanguage}>{isEnglish ? 'Русский' : 'English'}</button>
       {
         isOpenModalWindow && <ModalWindow />
       }
@@ -137,7 +138,6 @@ function App() {
         colors={colors}
         language={isEnglish}
       />
-      <button className='button-lang' onClick={toggleLanguage}>{isEnglish ? 'Русский' : 'English'}</button>
     </div>
   ); 
 } 
